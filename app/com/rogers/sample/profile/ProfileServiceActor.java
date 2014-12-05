@@ -3,8 +3,8 @@ package com.rogers.sample.profile;
 import java.util.UUID;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import play.Logger;
 import play.libs.F;
-import play.libs.ws.*;
 
 import scala.concurrent.Future;
 import akka.actor.AbstractActor;
@@ -19,6 +19,7 @@ import akka.pattern.Patterns;
 public class ProfileServiceActor extends AbstractActor{
 
     private final LoggingAdapter log = Logging.getLogger(getContext().system(), this);
+    private static final Logger.ALogger logger = Logger.of(ProfileServiceActor.class);
 
     private final com.rogers.sample.rest.AsyncRestClient<SelfRegistrationRequestMessage> selfRegistrationClient;
 
@@ -32,13 +33,14 @@ public class ProfileServiceActor extends AbstractActor{
 
     private ProfileServiceActor(com.rogers.sample.rest.AsyncRestClient<SelfRegistrationRequestMessage> selfRegistrationClient) {
         this.selfRegistrationClient = selfRegistrationClient;
-
+        logger.info("ProfileServiceActor.ProfileServiceActor()::About to call selfRegistration()");
         receive(ReceiveBuilder.match(SelfRegistrationRequestMessage.class, message -> {Future<JsonNode> future = selfRegistration(message);
                                                                                        Patterns.pipe(future, context().dispatcher()).to(sender());
         }).matchAny(message ->log.warning("Unexpected message type - registration service actor ignoring message: " + message.getClass() + ": " + message.toString())).build());
     }
 
     private Future<JsonNode> selfRegistration(SelfRegistrationRequestMessage request) {
+         logger.info("ProfileServiceActor.selfRegistration()::About to call selfRegistrationClient.makeRequest()");
     	 F.Promise<JsonNode> promise = selfRegistrationClient.makeRequest(request);
          return promise.wrapped();
 	}

@@ -1,6 +1,7 @@
 package com.rogers.sample.rest;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.rogers.sample.profile.SelfRegistrationRequestMessage;
 import play.Logger;
 import play.libs.F;
 import play.libs.ws.*;
@@ -33,15 +34,22 @@ public class AsyncRestClient<A> {
      */
 
     public F.Promise<JsonNode> makeRequest(A parameterObject) {
-        logger.info("Inside AsyncRestClient.makeRequest()");
-        WSRequestHolder request = WS.url(endpoint);
-        logger.info("AsyncRestClient.makeRequest()::Hitting the echo WS at : "+ endpoint);
 
-        F.Promise<JsonNode> responsePromise = request.get().map(new F.Function<WSResponse, JsonNode>() {
+        logger.info("Inside AsyncRestClient.makeRequest()");
+        //TODO : implement helper classes to convert generic parameterObject to WS request
+        //TODO : implement helper classes to convert the WS response
+        SelfRegistrationRequestMessage reqObj = (SelfRegistrationRequestMessage)parameterObject;
+        WSRequestHolder request = WS.url(endpoint+"/email/"+reqObj.getEmail().trim());
+        logger.info("AsyncRestClient.makeRequest()::Hitting the echo WS at : "+ endpoint);
+        JsonNode req = play.libs.Json.newObject().put("key1", "value1");
+        F.Promise<JsonNode> responsePromise = request.post(req).map(new F.Function<WSResponse, JsonNode>() {
             @Override
             public JsonNode apply(WSResponse wsResponse) throws Throwable {
-                logger.info("AsyncRestClient.makeRequest()::Got response");
-                return wsResponse.asJson();
+
+                JsonNode json = wsResponse.asJson();
+                logger.info("AsyncRestClient.makeRequest()::Got response : "+json);
+
+                return json;
             }
         });
 

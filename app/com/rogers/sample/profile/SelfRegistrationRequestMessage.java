@@ -4,17 +4,17 @@ import play.data.validation.Constraints;
 
 public class SelfRegistrationRequestMessage {
 
-    @Constraints.Required
-    private String lang;
-    /*@Constraints.Email
+    /*@Constraints.Required
+    private String lang;*/
+    @Constraints.Email
     @Constraints.Required
     private String email;
-    @Constraints.Required
+    /*@Constraints.Required
     private String question;
     @Constraints.Required
     private String answer;
     @Constraints.Required
-    private String password;
+    private String password;*/
 
     public String getEmail() {
         return email;
@@ -24,7 +24,7 @@ public class SelfRegistrationRequestMessage {
         this.email = email;
     }
 
-    public String getQuestion() {
+    /*public String getQuestion() {
         return question;
     }
 
@@ -46,7 +46,7 @@ public class SelfRegistrationRequestMessage {
 
     public void setPassword(String password) {
         this.password = password;
-    }*/
+    }
 
     public String getLang(){
         return lang;
@@ -55,7 +55,7 @@ public class SelfRegistrationRequestMessage {
     public void setLang(String lang){
         this.lang = lang;
     }
-
+*/
 
 
 }
