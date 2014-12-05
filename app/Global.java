@@ -9,11 +9,14 @@ public class Global extends GlobalSettings {
 
     @Override
     public void onStart(Application app) {
+        System.out.println("Context started");
         ctx = new ClassPathXmlApplicationContext("context/components.xml");
+
     }
 
     @Override
     public <A> A getControllerInstance(Class<A> clazz) {
+        System.out.println("getControllerInstance for : "+clazz.getName()+"of type"+clazz.getTypeName());
         return ctx.getBean(clazz);
     }
 

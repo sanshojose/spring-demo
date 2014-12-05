@@ -1,21 +1,20 @@
 package com.rogers.sample.profile;
 
-import java.util.UUID;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import play.Logger;
 import play.libs.F;
 
 import scala.concurrent.Future;
 import akka.actor.AbstractActor;
-import akka.actor.ActorRef;
-import akka.actor.ActorRefFactory;
 import akka.actor.Props;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
 import akka.pattern.Patterns;
 
+/**
+ * ProfileServiceActor will be handling the request-response asynchronously
+ */
 public class ProfileServiceActor extends AbstractActor{
 
     private final LoggingAdapter log = Logging.getLogger(getContext().system(), this);
@@ -23,17 +22,13 @@ public class ProfileServiceActor extends AbstractActor{
 
     private final com.rogers.sample.rest.AsyncRestClient<SelfRegistrationRequestMessage> selfRegistrationClient;
 
-    public static ActorRef create(com.rogers.sample.rest.AsyncRestClient selfRegistrationClient, ActorRefFactory context) {
-        return context.actorOf(ProfileServiceActor.props(selfRegistrationClient), "regService" + UUID.randomUUID().toString());
-    }
-
     public static Props props(com.rogers.sample.rest.AsyncRestClient selfRegistrationClient) {
         return Props.create(ProfileServiceActor.class, selfRegistrationClient);
     }
 
     private ProfileServiceActor(com.rogers.sample.rest.AsyncRestClient<SelfRegistrationRequestMessage> selfRegistrationClient) {
         this.selfRegistrationClient = selfRegistrationClient;
-        logger.info("ProfileServiceActor.ProfileServiceActor()::About to call selfRegistration()");
+        logger.info("ProfileServiceActor.ProfileServiceActor():: Waiting for messages");
         receive(ReceiveBuilder.match(SelfRegistrationRequestMessage.class, message -> {Future<JsonNode> future = selfRegistration(message);
                                                                                        Patterns.pipe(future, context().dispatcher()).to(sender());
         }).matchAny(message ->log.warning("Unexpected message type - registration service actor ignoring message: " + message.getClass() + ": " + message.toString())).build());

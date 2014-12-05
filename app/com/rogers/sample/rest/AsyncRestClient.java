@@ -8,9 +8,9 @@ import play.libs.ws.*;
 
 
 /**
- *
+ * Creates a client to handle the WS request-response
  * @param <A> accepts type
-
+ *
  */
 
 public class AsyncRestClient<A> {
@@ -18,19 +18,14 @@ public class AsyncRestClient<A> {
     private static final Logger.ALogger logger = Logger.of(com.rogers.sample.rest.AsyncRestClient.class);
     private final String endpoint;
 
-    /**
-     *
-     */
     public AsyncRestClient(String endpoint) {
-
         this.endpoint = endpoint;
-
         }
 
 
     /**
      * Make the WS call and parse the response into Json
-     * @return
+     * @return F.Promise<JsonNode>
      */
 
     public F.Promise<JsonNode> makeRequest(A parameterObject) {

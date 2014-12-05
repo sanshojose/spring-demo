@@ -6,7 +6,6 @@ import com.typesafe.config.ConfigFactory;
 import org.springframework.context.annotation.Configuration;
 import scala.concurrent.duration.Duration;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**

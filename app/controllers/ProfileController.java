@@ -2,7 +2,6 @@ package controllers;
 
 import akka.actor.ActorRef;
 import akka.pattern.Patterns;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.rogers.sample.AppConfig;
 import com.rogers.sample.profile.SelfRegistrationRequestMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,9 @@ import java.util.Map;
 
 import static play.data.Form.form;
 
-
+/**
+ * Main controller for profile registration
+ */
 @org.springframework.stereotype.Controller
 public class ProfileController extends Controller {
 
@@ -32,17 +33,18 @@ public class ProfileController extends Controller {
 
     @Autowired
     public ProfileController(AppConfig config, @Qualifier("regServiceActor") ActorRef regServiceActor) {
-        logger.info("Inside constructor - ProfileController");
+        logger.info("ProfileController.ProfileController()::Instantiating");
         this.config = config;
         this.regServiceActor = regServiceActor;
     }
 
     /**
-     * @return
+     *
+     * @return Promise<Result>
      * @throws UnknownHostException
      */
     public Promise<Result> register() throws UnknownHostException {
-        logger.info("Inside ProfileController.register()");
+        logger.info("ProfileController.register()::binding form data");
         Form<SelfRegistrationRequestMessage> registerRequestForm = form(SelfRegistrationRequestMessage.class);
 
         Map<String, String> data = Form.form().bindFromRequest().data();
@@ -53,9 +55,8 @@ public class ProfileController extends Controller {
         } else {
             SelfRegistrationRequestMessage request = form.get();
             try{
-                logger.info("ProfileController.register::About to invoke regServiceActor)");
+                logger.info("ProfileController.register()::About to invoke regServiceActor)");
                 Future<Object> future = Patterns.ask(regServiceActor, request, config.getTimeout());
-                logger.info("ProfileController.register::Got response from regServiceActor)");
                 Promise<Object> promise = Promise.wrap(future);
                 return promise.<Result> map(response -> ok(Json.toJson(response)));
 
