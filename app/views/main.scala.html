@@ -1,0 +1,37 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html ng-app="">
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+
+
+
+        <script>
+        function customersController($scope,$http) {
+        $scope.SelfRegistrationRequestMessage={};
+            $scope.register = function() {
+            alert("register");
+
+
+            $http({
+            method: 'POST',
+            url: 'http://127.0.0.1:9000/register',
+            data: 'email='+$scope.email,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).success(function(response) {
+            alert(response.toString());
+            $scope.emails=response;});
+
+            }
+        }
+</script>
+    </head>
+    <body>
+        @content
+    <h1>it worked ? </h1>
+    </body>
+</html>

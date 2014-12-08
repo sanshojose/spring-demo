@@ -1,0 +1,30 @@
+@main("Welcome to Play") {
+
+<div ng-controller="customersController">
+
+<div class="container">
+
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Email:</label>
+            <div class="col-sm-8">
+                <input type="text" ng-model="email">
+            </div>
+            <div class="col-sm-2">
+                <button ng-click="register()">
+                    Save
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+    <ul>
+        <li ng-repeat="x in emails">
+            {{x.email}}
+        </li>
+    </ul>
+</div>
+
+}
