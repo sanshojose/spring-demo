@@ -15,6 +15,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.concurrent.Future;
+import views.html.index;
 
 import java.net.UnknownHostException;
 import java.util.Map;
@@ -38,6 +39,9 @@ public class ProfileController extends Controller {
         this.regServiceActor = regServiceActor;
     }
 
+    public static Result index()   {
+        return ok(index.render());
+    }
     /**
      *
      * @return Promise<Result>
@@ -46,11 +50,13 @@ public class ProfileController extends Controller {
     public Promise<Result> register() throws UnknownHostException {
         logger.info("ProfileController.register()::binding form data");
         Form<SelfRegistrationRequestMessage> registerRequestForm = form(SelfRegistrationRequestMessage.class);
-
+        logger.info(registerRequestForm.toString());
         Map<String, String> data = Form.form().bindFromRequest().data();
+        logger.info(data.toString());
         Form<SelfRegistrationRequestMessage> form = registerRequestForm.bind(data);
-
+        logger.info(form.toString());
         if(form.hasErrors()){
+            logger.info("ProfileController.register()::form.hasErrors())");
             return Promise.pure(status(400, form.errorsAsJson()));
         } else {
             SelfRegistrationRequestMessage request = form.get();
@@ -58,6 +64,7 @@ public class ProfileController extends Controller {
                 logger.info("ProfileController.register()::About to invoke regServiceActor)");
                 Future<Object> future = Patterns.ask(regServiceActor, request, config.getTimeout());
                 Promise<Object> promise = Promise.wrap(future);
+                logger.info("ProfileController.register()::Got response");
                 return promise.<Result> map(response -> ok(Json.toJson(response)));
 
             } catch (Exception e) {

@@ -3,6 +3,7 @@
 # ~~~~
 
 # Home page
+GET     /                           controllers.ProfileController.index()
 POST    /register                   @controllers.ProfileController.register
 
 # Map static resources from the /public folder to the /assets URL path
