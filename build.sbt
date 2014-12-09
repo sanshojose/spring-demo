@@ -27,3 +27,9 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-testkit" % "2.3.4" % "test" exclude("javax.ws.rs", "jsr311-api")
 )
 
+libraryDependencies ++= Seq(
+  "org.webjars" %% "webjars-play" % "2.3.0-2",
+  "org.webjars" % "angularjs" % "1.3.0-beta.2",
+  "org.webjars" % "requirejs" % "2.1.11-1",
+  "org.webjars" % "bootstrap" % "3.3.1"
+)

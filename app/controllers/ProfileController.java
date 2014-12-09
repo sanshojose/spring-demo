@@ -40,7 +40,7 @@ public class ProfileController extends Controller {
     }
 
     public static Result index()   {
-        return ok(index.render());
+        return ok(views.html.index.render());
     }
     /**
      *
@@ -50,11 +50,9 @@ public class ProfileController extends Controller {
     public Promise<Result> register() throws UnknownHostException {
         logger.info("ProfileController.register()::binding form data");
         Form<SelfRegistrationRequestMessage> registerRequestForm = form(SelfRegistrationRequestMessage.class);
-        logger.info(registerRequestForm.toString());
         Map<String, String> data = Form.form().bindFromRequest().data();
-        logger.info(data.toString());
         Form<SelfRegistrationRequestMessage> form = registerRequestForm.bind(data);
-        logger.info(form.toString());
+
         if(form.hasErrors()){
             logger.info("ProfileController.register()::form.hasErrors())");
             return Promise.pure(status(400, form.errorsAsJson()));

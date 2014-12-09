@@ -1,0 +1,10 @@
+.confirm-popUp{
+    	margin: 20px;
+    }
+#open-modal{
+            position: absolute;
+            margin: 0 auto;
+            top: 20px;
+            right: 0;
+            left: 0;
+            }
