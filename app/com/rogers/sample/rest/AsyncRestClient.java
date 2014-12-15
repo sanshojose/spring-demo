@@ -34,7 +34,7 @@ public class AsyncRestClient<A> {
         //TODO : implement helper classes to convert generic parameterObject to WS request
         //TODO : implement helper classes to convert the WS response
         SelfRegistrationRequestMessage reqObj = (SelfRegistrationRequestMessage)parameterObject;
-        WSRequestHolder request = WS.url(endpoint+"/email/"+reqObj.getEmail().trim());
+        WSRequestHolder request = WS.url(endpoint+"/name/"+reqObj.getName()+"/email/"+reqObj.getEmail().trim());
         logger.info("AsyncRestClient.makeRequest()::Hitting the echo WS at : "+ endpoint);
         JsonNode req = play.libs.Json.newObject().put("key1", "value1");
         F.Promise<JsonNode> responsePromise = request.post(req).map(new F.Function<WSResponse, JsonNode>() {

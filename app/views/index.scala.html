@@ -1,7 +1,7 @@
 
 @main("Demo-Play,Java,Spring,Bootstrap,AngularJs") {
 
-<div ng-app="" ng-controller="customersController">
+<div ng-app="regUser" ng-controller="customerRegController">
 
 <div class="container-fluid">
     <div class="panel panel-primary">
@@ -9,41 +9,49 @@
             <h3 class="panel-title">Save your E-mail address</h3>
         </div>
         <div class="panel-body">
-            <form class="form-horizontal">
-
-                <label for="email">Email:</label>
-                <div class="input-group">
-                    <input class="form-control" type="text" id="email" ng-model="email" placeholder="Enter email">
-
-			        <span class="input-group-btn">
-                        <button class="btn btn-primary" type="button" id="open-modal" ng-click="register()">Save</button>
-				    </span>
-
+            <form class="form-horizontal" novalidate>
+                <div class="form-group">
+                    <label for="name" class="control-label col-xs-3 col-sm-3 col-md-2 col-lg-1">Name:</label>
+                    <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+                        <input class="form-control" type="text" id="name" ng-model="user.name" placeholder="Enter name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="control-label col-xs-3 col-sm-3 col-md-2 col-lg-1">Email:</label>
+                    <div class="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+                        <input class="form-control" type="text" id="email" ng-model="user.email" placeholder="Enter email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-offset-3 col-xs-3 col-sm-offset-3 col-sm-3 col-md-offset-2 col-md-2 col-lg-offset-1 col-lg-1">
+                        <button class="btn btn-primary" type="button" id="open-modal" ng-click="register(user)">Save</button>
+                     </div>
                 </div>
             </form>
+        </div>
+    </div>
 
         <!-- Modal HTML -->
-       <div class="confirm-popUp">
-        <div id="myModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">{{confirmStatus}}</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>{{confirmMsg}}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <div class="confirm-popUp">
+                <div id="myModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">{{confirmStatus}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{confirmMsg}}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-            </div>
-        </div>
-    </div>
-    </div>
+
+</div>
 </div>
 
 }
