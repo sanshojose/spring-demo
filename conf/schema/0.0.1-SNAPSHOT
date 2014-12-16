@@ -1,0 +1,5 @@
+use totes;
+
+drop table accounts;
+create table accounts(key varchar primary key, json varchar, added timestamp, expires timestamp);
+
