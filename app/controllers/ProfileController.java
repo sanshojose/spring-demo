@@ -15,7 +15,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import scala.concurrent.Future;
-import views.html.index;
 
 import java.net.UnknownHostException;
 import java.util.Map;
@@ -63,7 +62,7 @@ public class ProfileController extends Controller {
                 Future<Object> future = Patterns.ask(regServiceActor, request, config.getTimeout());
                 Promise<Object> promise = Promise.wrap(future);
                 logger.info("ProfileController.register()::Got response");
-                return promise.<Result> map(response -> ok(Json.toJson(response)));
+                return promise.<Result> map(responseData -> ok(Json.toJson(responseData)));
 
             } catch (Exception e) {
                 return Promise.pure(status(503));

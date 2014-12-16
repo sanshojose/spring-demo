@@ -33,3 +33,8 @@ libraryDependencies ++= Seq(
   "org.webjars" % "requirejs" % "2.1.11-1",
   "org.webjars" % "bootstrap" % "3.3.1"
 )
+
+libraryDependencies ++= Seq(
+"com.datastax.cassandra" % "cassandra-driver-core" % "2.0.4",
+  "com.google.code.gson" % "gson" % "2.3"
+)
