@@ -11,7 +11,7 @@ userRegModule.controller("customerRegController", function($scope,$http) {
             data: user
         }).success(function(response) {
             $scope.confirmStatus="Success !";
-            $scope.confirmMsg="Hello "+response.name+", Your E-mail "+response.email+" is registered";
+            $scope.confirmMsg="Hello "+response.name+", Your registered E-mail is : "+response.email;
         }).error(function (response) {
             $scope.confirmStatus="Error !";
             $scope.confirmMsg=response.email;
