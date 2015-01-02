@@ -9,7 +9,7 @@ Install python
 cqlsh
 (command line shell for cassandra)
 
-CREATE KEYSPACE totes with replication = { 'class' : 'SimpleStrategy', 'replication_factor': 1} ;
+CREATE KEYSPACE sample with replication = { 'class' : 'SimpleStrategy', 'replication_factor': 1} ;
 
 Follow schema update instructions
 
@@ -17,7 +17,7 @@ Schema Update
 -------------
 1. Start cqlsh client
 
-2. use totes;
+2. use sample;
 
 3. paste the schema into the terminal session (current version in conf/schema).
 
